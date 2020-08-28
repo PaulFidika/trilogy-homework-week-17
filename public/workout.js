@@ -1,3 +1,5 @@
+import API from './api.js'
+
 async function initWorkout() {
   const lastWorkout = await API.getLastWorkout();
   console.log("Last workout:", lastWorkout);
@@ -6,9 +8,14 @@ async function initWorkout() {
       .querySelector("a[href='/exercise?']")
       .setAttribute("href", `/exercise?id=${lastWorkout._id}`);
 
+    let { duration } = lastWorkout.exercises.reduce((acc, curr) => {
+      acc.duration = (acc.duration || 0) + (curr.duration || 0)
+      return acc
+    })
+
     const workoutSummary = {
       date: formatDate(lastWorkout.day),
-      totalDuration: lastWorkout.totalDuration,
+      totalDuration: duration,
       numExercises: lastWorkout.exercises.length,
       ...tallyExercises(lastWorkout.exercises)
     };

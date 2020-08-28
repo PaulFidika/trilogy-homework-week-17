@@ -14,6 +14,8 @@ const addButton = document.querySelector("button.add-another");
 const toast = document.querySelector("#toast");
 const newWorkout = document.querySelector(".new-workout")
 
+import API from './api.js'
+
 let workoutType = null;
 let shouldNavigateAway = false;
 
@@ -22,7 +24,6 @@ async function initExercise() {
 
   if (location.search.split("=")[1] === undefined) {
     workout = await API.createWorkout()
-    console.log(workout)
   }
   if (workout) {
     location.search = "?id=" + workout._id;
