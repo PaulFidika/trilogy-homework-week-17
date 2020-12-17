@@ -16,7 +16,10 @@
       dest: /etc/filebeat/filebeat.yml
 
   - name: enable and configure system module
-    command: ["/bin/sh", "-c"]
-      - filebeat modules enable system
-        filebeat setup
-        service filebeat start
+    command: filebeat modules enable system
+
+  - name: something else
+    command: filebeat setup
+
+  - name: almost done
+    command: service filebeat start
